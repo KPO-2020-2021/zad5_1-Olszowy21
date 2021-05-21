@@ -24,7 +24,7 @@ int main() {
             << "."
             << PROJECT_VERSION_PATCH
             << "."
-            << PROJECT_VERSION_TWEAK
+            << PROJECT_VERSION_TWEAK //jebie mi z dupy
             << std::endl;
   std::system("cat ../LICENSE");
 
