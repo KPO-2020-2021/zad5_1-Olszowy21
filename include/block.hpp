@@ -1,19 +1,10 @@
 #pragma once
 
 
-#include <iomanip>
-#include <fstream>
-#include <iostream>
-#include <cmath>
-#include "size.hpp"
-#include <math.h>
-#include <string>
-#include <sstream>
-
-#define MIN_DIFF 0.0000001
+#include "matrix3d.hpp"
 
 /*!
- * \file  bryla.hh
+ * \file  block.hh
  *  
  *  Plik zawiera klasę bryla oraz
  *  jest ojcem dla wszystkich bibliotek wbudowanych.
@@ -21,11 +12,12 @@
  */
 
 class Block{
-    NazwaPliku_BrylaWzorcowa: std::string
-    NazwaPliku_BrylaFinalna: std::string
-    Skala Vector3D
+    std::string NazwaPliku_BrylaWzorcowa;
+    std::string NazwaPliku_BrylaFinalna;
+    Vector3D skala;
 
 public:
-
-    
+    Vector3D skaluj( const Vector3D top);
+    const std::string& get_filename_standard() const;
+    const std::string& get_filename_final() const;
 };
