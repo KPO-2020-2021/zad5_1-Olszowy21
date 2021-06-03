@@ -32,7 +32,7 @@ int main() {
   std::system("cat ../LICENSE");
 
   char x;
-  //std::ofstream FILE;
+  std::ofstream FILE;
   //Cuboid cuboid = Cuboid();
   //Vector3D Przesuniecie = Vector3D();
   //Matrix3D macierz;

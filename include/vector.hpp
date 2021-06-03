@@ -5,6 +5,9 @@
 #include <iostream>
 #include <cmath>
 #include "size.hpp"
+#include <list>
+#include <memory>
+#include <unistd.h>
 #include <math.h>
 #include <string>
 #include <sstream>
