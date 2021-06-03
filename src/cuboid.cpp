@@ -60,7 +60,7 @@ const Vector<double, SIZE>& Cuboid::operator [] (unsigned int index) const{
 
 // }
 
-Cuboid::Cuboid(double dlugosc, double szerokosc, double wysokosc, Vector3D centrum){
+Cuboid::Cuboid(Vector3D centrum, double dlugosc, double szerokosc, double wysokosc){
     
     Polozenie = centrum;
     Vector3D x(dlugosc*(1/2), 0, 0);

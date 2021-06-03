@@ -22,6 +22,8 @@ protected:
 
     Matrix3D Macierz;
 
+    double kat_do_globalnego;
+
 public:
 
     void set_skala(Vector3D &tmp) { skala = tmp; };

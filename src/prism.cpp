@@ -1,7 +1,32 @@
 #include "prism.hpp"
 
 
+Prism::Prism(Vector3D skala, Vector3D center, double promien, int index){
 
+       Vector3D x(1.5*skala[0], 0, 0);
+       Vector3D y(0, (6-sqrt(3))/2 * skala[1], 0);
+       Vector3D z(0, 0, 1 * skala[2]);
+
+       if(index == 0){
+              Polozenie = center - x - y + z;
+              
+       }
+
+       else if(index == 1){
+              Polozenie = center + x - y + z;
+              
+       }
+
+       else if(index == 2){
+              Polozenie = center - x + y + z;
+              
+       }
+
+       else if(index == 3){
+              Polozenie = center + x + y + z;
+              
+       }
+}
 
 
 
