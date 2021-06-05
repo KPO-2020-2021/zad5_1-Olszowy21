@@ -1,5 +1,21 @@
 #include "vector3d.hpp"
 
+/*!
+ * Przeciazenie operatora wypisywania do piku.
+ * \param[in] out - strumien wyjsciowy, do ktorego maja zostac zapisane
+ *                     kolejne wspolrzedne.
+ * \param[in] tmp - skladowa klasy Vektor ktora bedzie wypisywana na
+ *                      wyjscie.
+ * 
+ */
+template <>
+std::ostream& operator << (std::ofstream &out, Vector3D const &tmp)
+{
+    for (unsigned int i = 0; i < SIZE; ++i) {
+        out << std::fixed << std::setprecision(10) << tmp[i] << ' ';
+    }
+    return out;
+}
 
 /*!
  * Przeciazenie operatora wypisywania.

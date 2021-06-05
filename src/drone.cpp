@@ -15,6 +15,10 @@ Drone::Drone(Vector3D skala){
 
 }
 
+bool otworz_pliki_zapisu() const{
+    
+}
+
 bool Lot_pionowy(double dlugosc_lotu, PzG::LaczeDoGNUPlota &Lacze){
     
 

@@ -43,22 +43,16 @@ const Vector<double, SIZE>& Cuboid::operator [] (unsigned int index) const{
  * 
  * 
  */
-// Cuboid::Cuboid(){
+Cuboid::Cuboid(){
 
-//     Polozenie = Vector<double, SIZE>(2, 3, 1);
+    for(int i = 0; i < 10; ++i ){
+            top[i] = 0;
+    }
+    kat_do_globalnego = 0;
+    
+    skala = Vector3D(1, 1, 1);
 
-//     top[0] = Vector<double, SIZE>(2, 3, 3);
-//     top[1] = Vector<double, SIZE>(2, 3, 3);
-//     top[2] = Vector<double, SIZE>(22, 3, 3);
-//     top[3] = Vector<double, SIZE>(2, 18, 3);
-//     top[4] = Vector<double, SIZE>(22, 18, 3);
-//     top[5] = Vector<double, SIZE>(2, 18, 28);
-//     top[6] = Vector<double, SIZE>(22, 18, 28);
-//     top[7] = Vector<double, SIZE>(2, 3, 28);
-//     top[8] = Vector<double, SIZE>(22, 3, 28);
-//     top[9] = Vector<double, SIZE>(2, 3, 3);
-
-// }
+}
 
 Cuboid::Cuboid(Vector3D centrum, double dlugosc, double szerokosc, double wysokosc){
     
@@ -162,7 +156,6 @@ void Cuboid::throwing_Cuboid(const Matrix<double, SIZE> &tmp){
     }
 }
 
-
 /*!
  * Przyklad zapisu wspolrzednych zbioru punktow do pliku, z ktorego
  * dane odczyta program gnuplot i narysuje je w swoim oknie graficznym.
@@ -172,104 +165,68 @@ void Cuboid::throwing_Cuboid(const Matrix<double, SIZE> &tmp){
  * \retval true - gdy operacja zapisu powiodła się,
  * \retval false - w przypadku przeciwnym.
  */
-bool Cuboid::Zapis_Do_Pliku_wzorcowego()
-{
-    std::ofstream  StrmWy;
-    std::string File_name;
+bool Cuboid::Zapis_do_pliku_wzorcowego(std::ofstream &out){
+       
+       out << top[0] + Polozenie << std::endl;
+       out << top[1] + Polozenie << std::endl;
+       out << top[2] + Polozenie << std::endl
+           << top[9] + Polozenie << std::endl << std::endl;
 
-    File_name = get_filename_standard();
+       out << top[0] + Polozenie << std::endl;
+       out << top[3] + Polozenie << std::endl;
+       out << top[4] + Polozenie << std::endl
+           << top[9] + Polozenie << std::endl << std::endl;
 
+       out << top[0] + Polozenie << std::endl;
+       out << top[5] + Polozenie << std::endl;
+       out << top[6] + Polozenie << std::endl
+           << top[9] + Polozenie << std::endl << std::endl;
 
-    const char* WSK_FILE = File_name.c_str();
+       out << top[0] + Polozenie << std::endl;
+       out << top[7] + Polozenie << std::endl;
+       out << top[8] + Polozenie << std::endl
+           << top[9] + Polozenie << std::endl << std::endl;
 
-    StrmWy.open(WSK_FILE, std::ios::trunc);
+       out << top[0] + Polozenie << std::endl;
+       out << top[1] + Polozenie << std::endl;
+       out << top[2] + Polozenie << std::endl
+           << top[9] + Polozenie << std::endl << std::endl;
 
-    if (!StrmWy.is_open())  {
-        std::cerr << ":(  Operacja otwarcia do zapisu \"" << WSK_FILE << "\"" << std::endl
-        << ":(  nie powiodla sie." << std::endl;
-        return false;
-    }
-  
-    StrmWy << top[0] << std::endl;
-    StrmWy << top[1] << std::endl;
-    StrmWy << top[2] << std::endl
-           << top[9] << std::endl << std::endl;
+                                   // Jeszcze raz zapisujemy pierwszy punkt,
+                                   // aby gnuplot narysowal zamkniętą linię.
 
-    StrmWy << top[0] << std::endl;
-    StrmWy << top[3] << std::endl;
-    StrmWy << top[4] << std::endl
-           << top[9] << std::endl << std::endl;
+       }
 
-    StrmWy << top[0] << std::endl;
-    StrmWy << top[5] << std::endl;
-    StrmWy << top[6] << std::endl
-           << top[9] << std::endl << std::endl;
+bool Cuboid::Zapis_do_pliku_animowanego(std::ofstream &out){
 
-    StrmWy << top[0] << std::endl;
-    StrmWy << top[7] << std::endl;
-    StrmWy << top[8] << std::endl
-           << top[9] << std::endl << std::endl;
+       out << top[0] + Polozenie << std::endl;
+       out << top[1] + Polozenie << std::endl;
+       out << top[2] + Polozenie << std::endl
+           << top[9] + Polozenie << std::endl << std::endl;
 
-    StrmWy << top[0] << std::endl;
-    StrmWy << top[1] << std::endl;
-    StrmWy << top[2] << std::endl
-           << top[9] << std::endl << std::endl;
+       out << top[0] + Polozenie << std::endl;
+       out << top[3] + Polozenie << std::endl;
+       out << top[4] + Polozenie << std::endl
+           << top[9] + Polozenie << std::endl << std::endl;
 
-                                // Jeszcze raz zapisujemy pierwszy punkt,
-                                // aby gnuplot narysowal zamkniętą linię.
+       out << top[0] + Polozenie << std::endl;
+       out << top[5] + Polozenie << std::endl;
+       out << top[6] + Polozenie << std::endl
+           << top[9] + Polozenie << std::endl << std::endl;
 
-    StrmWy.close();
-    return !StrmWy.fail();
-}
+       out << top[0] + Polozenie << std::endl;
+       out << top[7] + Polozenie << std::endl;
+       out << top[8] + Polozenie << std::endl
+           << top[9] + Polozenie << std::endl << std::endl;
 
-bool Cuboid::Zapis_Do_Pliku_animowanego()
-{
-    std::ofstream  StrmWy;
-    std::string File_name;
+       out << top[0] + Polozenie << std::endl;
+       out << top[1] + Polozenie << std::endl;
+       out << top[2] + Polozenie << std::endl
+           << top[9] + Polozenie << std::endl << std::endl;
 
-    File_name = get_filename_anime();
+                                   // Jeszcze raz zapisujemy pierwszy punkt,
+                                   // aby gnuplot narysowal zamkniętą linię.
 
-
-    const char* WSK_FILE = File_name.c_str();
-
-    StrmWy.open(WSK_FILE, std::ios::trunc);
-
-    if (!StrmWy.is_open())  {
-        std::cerr << ":(  Operacja otwarcia do zapisu \"" << WSK_FILE << "\"" << std::endl
-        << ":(  nie powiodla sie." << std::endl;
-        return false;
-    }
-  
-    StrmWy << top[0] << std::endl;
-    StrmWy << top[1] << std::endl;
-    StrmWy << top[2] << std::endl
-           << top[9] << std::endl << std::endl;
-
-    StrmWy << top[0] << std::endl;
-    StrmWy << top[3] << std::endl;
-    StrmWy << top[4] << std::endl
-           << top[9] << std::endl << std::endl;
-
-    StrmWy << top[0] << std::endl;
-    StrmWy << top[5] << std::endl;
-    StrmWy << top[6] << std::endl
-           << top[9] << std::endl << std::endl;
-
-    StrmWy << top[0] << std::endl;
-    StrmWy << top[7] << std::endl;
-    StrmWy << top[8] << std::endl
-           << top[9] << std::endl << std::endl;
-
-    StrmWy << top[0] << std::endl;
-    StrmWy << top[1] << std::endl;
-    StrmWy << top[2] << std::endl
-           << top[9] << std::endl << std::endl;
-
-                                // Jeszcze raz zapisujemy pierwszy punkt,
-                                // aby gnuplot narysowal zamkniętą linię.
-
-    StrmWy.close();
-    return !StrmWy.fail();
 }
 
 

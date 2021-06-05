@@ -20,8 +20,11 @@ class Prism: public Block{
 
     Vector<double, SIZE> top[14];
 
+    friend class Drone;
+
 public:
 // Konstruktory
+
     Prism();
 
     Prism(Vector3D skala, Vector3D center, double promien, int index);
@@ -34,6 +37,8 @@ public:
 
     void Kicking_Prism(const Vector<double, SIZE> &tmp);
 
-    bool ZapisWspolrzednychDoPliku();
+    void Zapis_do_pliku_wzorcowego(std::ofstream &out);
+
+    void Zapis_do_pliku_animowanego(std::ofstream &out);
 
 };

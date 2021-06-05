@@ -67,6 +67,24 @@ std::istream &operator >> (std::istream &in, Vector<T, SIZE> &tmp);
 template <typename T, unsigned int SIZE>
 std::ostream& operator << (std::ostream &out, Vector<T, SIZE> const &tmp);
 
+template <typename T, unsigned int SIZE>
+std::ostream& operator << (std::ofstream &out, Vector<T, SIZE> const &tmp);
+
+/*!
+ * Przeciazenie operatora wypisywania do pliku.
+ * \param[in] out - strumien wyjsciowy do pliku, do ktorego maja zostac zapisane
+ *                     kolejne wspolrzedne.
+ * \param[in] tmp - skladowa klasy Vektor ktora bedzie wypisywana na
+ *                      wyjscie.
+ * 
+ */
+template <typename T, unsigned int SIZE>
+std::ostream& operator << (std::ofstream &out, Vector<T, SIZE> const &tmp){
+    for (unsigned int i = 0; i < SIZE; ++i) {
+        out << std::fixed << std::setprecision(10) << tmp[i] << ' ';
+    }
+    return out;
+}
 
 /*!
  * Przeciazenie operatora wypisywania.

@@ -19,14 +19,16 @@ class Cuboid: public Block{
     
     Vector<double, SIZE> top[10];
 
+    friend class Drone;
+
 public:
 
 // Konstruktory 
 
     Cuboid();
 
-    Cuboid(Vector<double, SIZE> first, Vector<double, SIZE> second, Vector<double, SIZE> third, Vector<double, SIZE> fourth,
-            Vector<double, SIZE> fifth, Vector<double, SIZE> sixth,  Vector<double, SIZE> seventh, Vector<double, SIZE> eigth, Vector3D centrum);
+    // Cuboid(Vector<double, SIZE> first, Vector<double, SIZE> second, Vector<double, SIZE> third, Vector<double, SIZE> fourth,
+    //         Vector<double, SIZE> fifth, Vector<double, SIZE> sixth,  Vector<double, SIZE> seventh, Vector<double, SIZE> eigth, Vector3D centrum);
 
     Cuboid(Vector3D centrum, double dlugosc, double szerokosc, double wysokosc);
     
@@ -40,9 +42,9 @@ public:
 
     void Kicking_Cuboid(const Vector<double, SIZE> &tmp);
 
-    bool Zapis_Do_Pliku_animowanego();
+    bool Zapis_do_pliku_wzorcowego(std::ofstream &out);
 
-    bool Zapis_Do_Pliku_wzorcowego();
+    bool Zapis_do_pliku_animowanego(std::ofstream &out);
 
     Vector<double, SIZE> &operator [] (unsigned int index);
 
