@@ -5,8 +5,8 @@
 
 
 class Cuboid: public Block{
+protected:
 
-    // std::string Plik_BrylaWzorcowa;
     // std::string Plik_BrylaAnimowana;
 
     // Vector3D skala;
@@ -15,42 +15,46 @@ class Cuboid: public Block{
 
     // Matrix3D Macierz;
 
-    // top[0] i top[9] odpowiadaja za pubkty kopertowe
+    // kat_do_globalnego
+
+    Vector3D top[10]; // wiechrzołki z lokalnymi wartościami. top[0] i top[9] reprezentują wiechrzołki koperty. ( Już przeskalowane )
     
-    Vector<double, SIZE> top[10];
-
-    friend class Drone;
-
+    
 public:
 
 // Konstruktory 
 
     Cuboid();
 
-    // Cuboid(Vector<double, SIZE> first, Vector<double, SIZE> second, Vector<double, SIZE> third, Vector<double, SIZE> fourth,
-    //         Vector<double, SIZE> fifth, Vector<double, SIZE> sixth,  Vector<double, SIZE> seventh, Vector<double, SIZE> eigth, Vector3D centrum);
-
-    Cuboid(Vector3D centrum, double dlugosc, double szerokosc, double wysokosc);
+    Cuboid(Vector3D centrum);
+    
     
 // Metody
 
-    Vector3D Trans_do_rodzica(const Vector3D & top) const;
+    void length_of_the_sides(int index);
+
+    void inicjuj_cuboida(std::string Filename_oryginal, Vector3D skala, Vector3D Polozenie );
 
     const Vector<double, SIZE> &operator [] (unsigned int index) const;
 
-    void throwing_Cuboid(const Matrix<double, SIZE> &tmp);
-
-    void Kicking_Cuboid(const Vector<double, SIZE> &tmp);
-
-    bool Zapis_do_pliku_wzorcowego(std::ofstream &out);
-
-    bool Zapis_do_pliku_animowanego(std::ofstream &out);
-
     Vector<double, SIZE> &operator [] (unsigned int index);
 
-    bool operator == (const Cuboid &tmp) const;
+// Metody dziedziczone
 
-    void length_of_the_sides(int index);
+    // Vector3D Skrobanie_do_ojca(const Vector3D & top) const;
+
+    // void set_skala(Vector3D &tmp) { skala = tmp; };
+    // Vector3D skaluj( const Vector3D top);
+
+    // std::string set_filename_anime(std::string Filename_anime) { Plik_BrylaAnimowana = Filename_anime;};
+
+    // const std::string get_filename_anime() const {return Plik_BrylaAnimowana ;};
+    
+    // bool Otworz_Plik_animowany(std::ofstream &out, std::string File_name);
+
+    // void Zamknij_Plik_animowany(std::ofstream &out);
+
+    // void set_kat(double kat) { kat_do_globalnego = kat;};
 };
 
 

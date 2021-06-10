@@ -1,20 +1,25 @@
 #include "cuboid.hpp"
 
 
+
 /*!
- * Przeciazenie operatora wypisywania na ekran.
- * \param[in] out - strumien wyjsciowy, z ktorego maja zostac wpisane
- *                     kolejne wspolrzedne.
- * \param[in] tmp - skladowa klasy Cuboid z ktorej bedzie wypisywane
- *                     wspolrzedne na ekran.
+ * Konstruktor dla prostopadłościanu z przypadkowymi wartościami.
+ *
+ * 
  * 
  */
-std::ostream &operator << (std::ostream &out, Cuboid const &tmp){
+Cuboid::Cuboid(){
 
-    for(unsigned int i = 0; i < SIZE+7; ++i){
-        out << i + 1 << " Wiechołek prostokąta - " << tmp[i] << std::endl;
-    }
-    return out;
+    kat_do_globalnego = 0;
+    
+    skala = Vector3D(1, 1, 1);
+
+}
+
+Cuboid::Cuboid(Vector3D centrum){
+    
+    Polozenie = centrum;
+
 }
 
 /*!
@@ -37,195 +42,43 @@ const Vector<double, SIZE>& Cuboid::operator [] (unsigned int index) const{
     return top[index];
 }
 
-/*!
- * Konstruktor dla prostopadłościanu z przypadkowymi wartościami.
- *
- * 
- * 
- */
-Cuboid::Cuboid(){
-
-    for(int i = 0; i < 10; ++i ){
-            top[i] = 0;
-    }
-    kat_do_globalnego = 0;
+void Cuboid::inicjuj_cuboida(std::string Filename_oryginal , Vector3D skala, Vector3D Polozenie ){
     
-    skala = Vector3D(1, 1, 1);
+    Vector3D broker;
 
-}
+    std::ifstream oryginal;
 
-Cuboid::Cuboid(Vector3D centrum, double dlugosc, double szerokosc, double wysokosc){
-    
-    Polozenie = centrum;
-    Vector3D x(dlugosc*(1/2), 0, 0);
-    Vector3D y(0, szerokosc*(1/2), 0);
-    Vector3D z(0, 0, wysokosc*(1/2));
+    const char* WSK_FILE = Filename_oryginal.c_str();
 
-    top[0] = centrum - x;
-    top[9] = centrum + x;
+    set_skala(skala);
 
-    top[1] = centrum - x - y - z;
-    top[2] = centrum + x - y - z;
+    oryginal.open(WSK_FILE, std::ios::in );
 
-    top[3] = centrum - x + y - z;
-    top[4] = centrum + x + y - z;
+    if(oryginal.is_open()){
+        while(true){
+            int licznik = 1;                        // zmienna pomagająca poprawnie dodać dane do wiechrzołków
+            for(int j = 0; j < 1; ++j){
+                oryginal >> broker;
+                if (oryginal.eof()) return;
+                broker = skaluj(broker);
+                top[j] = broker;
 
-    top[5] = centrum - x + y + z;
-    top[6] = centrum + x + y + z;
+                for(int i = 0; i < 2; ++i){
+                    oryginal >> broker;
+                    broker = skaluj(broker);
+                    top[licznik] = broker;
+                }
 
+                oryginal >> broker;
+                broker = skaluj(broker);
+                top[9] = broker;
 
-    top[7] = centrum - x - y + z;
-    top[8] = centrum + x - y + z;
+                ++licznik;
+            }
 
-}
-
-/*!
- * Konstruktor dla prostopadłościanu z przychodzącymi wartościami.
- * \param[in] first - wektor 1 dla prostopadłościanu. 
- * \param[in] second - wektor 2 dla prostopadłościanu. 
- * \param[in] third - wektor 3 dla prostopadłościanu. 
- * \param[in] fourth - wektor 4 dla prostopadłościanu. 
- * \param[in] fifth - wektor 5 dla prostopadłościanu. 
- * \param[in] sixth - wektor 6 dla prostopadłościanu. 
- * \param[in] seventh - wektor 7 dla prostopadłościanu. 
- * \param[in] eigth - wektor 8 dla prostopadłościanu. 
- * 
- */
-// Cuboid::Cuboid( Vector<double, SIZE> first, Vector<double, SIZE> second, Vector<double, SIZE> third, Vector<double, SIZE> fourth,
-//                 Vector<double, SIZE> fifth, Vector<double, SIZE> sixth,  Vector<double, SIZE> seventh, Vector<double, SIZE> eigth, Vector3D centrum ){
-    
-//     top[0] = first;
-//     top[1] = second;
-//     top[2] = third;
-//     top[3] = fourth;
-//     top[4] = fifth;
-//     top[5] = sixth;
-//     top[6] = seventh;
-//     top[7] = eigth;
-
-//     Polozenie = centrum;
-
-// }
-
-
-/*!
- * Realizuje porownanie dwoch prostokatow ze soba dopuszczajac margines bledu.
- * \param[in] tmp - nazwa prostokata sprawdzanego z prostokatem zawartym wewnatrz klasy
- * 
- * \retval true - gdy oba sa sobie rowne.
- * \retval false - w przypadku przeciwnym.
- */
-bool Cuboid::operator == (const Cuboid &tmp) const{
-
-    for(unsigned int i = 0; i < SIZE+7; ++i){
-        if(!(this->top[i] == tmp.top[i])){
-            return false;
         }
     }
-    return true;
-}
 
-
-/*!
- * Metoda przesuwania punktow szczegolnych figury o zadany wektor.
- * \param[in] tmp - nazwa wektora która przysluzy się do przesuniecia punktow prostokata
- *                         
- */
-void Cuboid::Kicking_Cuboid(const Vector<double, SIZE> &tmp){
-    
-    for(unsigned int i=0; i<SIZE+7; ++i){
-
-        top[i] = top[i] + tmp;
-
-    }
-
-    Polozenie = Polozenie + tmp;
-}
-
-/*!
- * Metoda obracania punktow szczegolnych figury.
- * \param[in] tmp - nazwa macierzy która przysłuży się do obracania punktow prostokata
- *                         
- */
-void Cuboid::throwing_Cuboid(const Matrix<double, SIZE> &tmp){
-    
-    for(unsigned int i=0; i<SIZE+7; ++i){
-
-        top[i] = tmp * top[i];
-
-    }
-}
-
-/*!
- * Przyklad zapisu wspolrzednych zbioru punktow do pliku, z ktorego
- * dane odczyta program gnuplot i narysuje je w swoim oknie graficznym.
- * \param[in] File_name - nazwa pliku, do którego zostana zapisane
- *                          wspolrzędne punktów.
- * 
- * \retval true - gdy operacja zapisu powiodła się,
- * \retval false - w przypadku przeciwnym.
- */
-bool Cuboid::Zapis_do_pliku_wzorcowego(std::ofstream &out){
-       
-       out << top[0] + Polozenie << std::endl;
-       out << top[1] + Polozenie << std::endl;
-       out << top[2] + Polozenie << std::endl
-           << top[9] + Polozenie << std::endl << std::endl;
-
-       out << top[0] + Polozenie << std::endl;
-       out << top[3] + Polozenie << std::endl;
-       out << top[4] + Polozenie << std::endl
-           << top[9] + Polozenie << std::endl << std::endl;
-
-       out << top[0] + Polozenie << std::endl;
-       out << top[5] + Polozenie << std::endl;
-       out << top[6] + Polozenie << std::endl
-           << top[9] + Polozenie << std::endl << std::endl;
-
-       out << top[0] + Polozenie << std::endl;
-       out << top[7] + Polozenie << std::endl;
-       out << top[8] + Polozenie << std::endl
-           << top[9] + Polozenie << std::endl << std::endl;
-
-       out << top[0] + Polozenie << std::endl;
-       out << top[1] + Polozenie << std::endl;
-       out << top[2] + Polozenie << std::endl
-           << top[9] + Polozenie << std::endl << std::endl;
-
-                                   // Jeszcze raz zapisujemy pierwszy punkt,
-                                   // aby gnuplot narysowal zamkniętą linię.
-
-       }
-
-bool Cuboid::Zapis_do_pliku_animowanego(std::ofstream &out){
-
-       out << top[0] + Polozenie << std::endl;
-       out << top[1] + Polozenie << std::endl;
-       out << top[2] + Polozenie << std::endl
-           << top[9] + Polozenie << std::endl << std::endl;
-
-       out << top[0] + Polozenie << std::endl;
-       out << top[3] + Polozenie << std::endl;
-       out << top[4] + Polozenie << std::endl
-           << top[9] + Polozenie << std::endl << std::endl;
-
-       out << top[0] + Polozenie << std::endl;
-       out << top[5] + Polozenie << std::endl;
-       out << top[6] + Polozenie << std::endl
-           << top[9] + Polozenie << std::endl << std::endl;
-
-       out << top[0] + Polozenie << std::endl;
-       out << top[7] + Polozenie << std::endl;
-       out << top[8] + Polozenie << std::endl
-           << top[9] + Polozenie << std::endl << std::endl;
-
-       out << top[0] + Polozenie << std::endl;
-       out << top[1] + Polozenie << std::endl;
-       out << top[2] + Polozenie << std::endl
-           << top[9] + Polozenie << std::endl << std::endl;
-
-                                   // Jeszcze raz zapisujemy pierwszy punkt,
-                                   // aby gnuplot narysowal zamkniętą linię.
 
 }
 

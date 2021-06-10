@@ -13,7 +13,7 @@
 
 class Block{
 protected:
-    std::string Plik_BrylaWzorcowa;
+
     std::string Plik_BrylaAnimowana;
 
     Vector3D skala;
@@ -24,19 +24,23 @@ protected:
 
     double kat_do_globalnego;
 
+
 public:
 
+    Vector3D Skrobanie_do_rodzica(const Vector3D & top) const;
+
     void set_skala(Vector3D &tmp) { skala = tmp; };
-    Vector3D skaluj( const Vector3D top);
+    Vector3D skaluj( const Vector3D top );
 
-    const std::string& get_filename_standard() const {return Plik_BrylaWzorcowa ;};
-    const std::string& get_filename_anime() const {return Plik_BrylaAnimowana ;};
+    void set_pozycje( Vector3D Pozycja) { Polozenie = Pozycja;};
+
+    std::string set_filename_anime(std::string Filename_anime) { Plik_BrylaAnimowana = Filename_anime;};
+
+    const std::string get_filename_anime() const {return Plik_BrylaAnimowana ;};
     
-    bool Otworz_Plik_animowany(std::ofstream &out, std::string File_name);
-    bool Otworz_Plik_wzorcowy(std::ofstream &out, std::string File_name);
+    bool Otworz_Plik_animowany(std::ofstream &out) const;
 
-    void Zamknij_Plik_animowany(std::ofstream &out);
-    void Zamknij_Plik_wzorcowy(std::ofstream &out);
+    void Zamknij_Plik_animowany(std::ofstream &out) const;
 
     void set_kat(double kat) { kat_do_globalnego = kat;};
 

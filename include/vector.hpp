@@ -34,6 +34,10 @@ class Vector{
     
     T size[SIZE];     //Tablica wektora
 
+    static int Aktywne_vektory;
+
+    static int Ogolnie_vektory;
+
 public:
     
 // Konstruktory

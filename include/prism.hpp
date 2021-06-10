@@ -4,8 +4,8 @@
 
 
 class Prism: public Block{
+protected:
 
-    // std::string Plik_BrylaWzorcowa;
     // std::string Plik_BrylaAnimowana;
 
     // Vector3D skala;
@@ -15,30 +15,35 @@ class Prism: public Block{
     // Matrix3D Macierz;
 
     // double kat_do_globalnego;
-
-    //top[13]/top[0] ---> Pomocnicze do koperty
-
-    Vector<double, SIZE> top[14];
-
-    friend class Drone;
+    
+    Vector3D top[14]; // wiechrzołki z lokalnymi wartościami. top[0] i top[13] reprezentują wiechrzołki koperty. ( Już przeskalowane )
 
 public:
 // Konstruktory
 
     Prism();
 
-    Prism(Vector3D skala, Vector3D center, double promien, int index);
-
 // Metody
 
-    Vector3D Trans_do_rodzica(const Vector3D & top) const;
+    void inicjuj_prism(std::string Filename_oryginal, Vector3D Pozycja, Vector3D skala, int index );
 
-    void throwing_Prism(const Matrix<double, SIZE> &tmp);
+    const Vector<double, SIZE> &operator [] (unsigned int index) const;
 
-    void Kicking_Prism(const Vector<double, SIZE> &tmp);
+    Vector<double, SIZE> &operator [] (unsigned int index);
 
-    void Zapis_do_pliku_wzorcowego(std::ofstream &out);
+    // Vector3D Skrobanie_do_ojca(const Vector3D & top) const;
 
-    void Zapis_do_pliku_animowanego(std::ofstream &out);
+    // void set_skala(Vector3D &tmp) { skala = tmp; };
+    // Vector3D skaluj( const Vector3D top);
+
+    // std::string set_filename_anime(std::string Filename_anime) { Plik_BrylaAnimowana = Filename_anime;};
+
+    // const std::string get_filename_anime() const {return Plik_BrylaAnimowana ;};
+    
+    // bool Otworz_Plik_animowany(std::ofstream &out, std::string File_name);
+
+    // void Zamknij_Plik_animowany(std::ofstream &out);
+
+    // void set_kat(double kat) { kat_do_globalnego = kat;};
 
 };
