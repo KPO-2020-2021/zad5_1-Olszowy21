@@ -15,16 +15,6 @@
 #include "matrix3d.hpp"
 #include "vector3d.hpp"
 
-void add_file_names(std::string *anime){
-  
-  anime[0][0] = (char)"../datasets/cuboid1.dat";
-  anime[0][1] = (char)"../datasets/rotor1.dat";
-  anime[0][2] = (char)"../datasets/rotor2.dat";
-  anime[0][3] = (char)"../datasets/rotor3.dat";
-  anime[0][4] = (char)"../datasets/rotor4.dat";
-
-  
-}
 
 /*
  * Simple main program that demontrates how access
@@ -44,30 +34,34 @@ int main() {
 
   char x;
   std::ofstream FILE;
-  std::string File_name_anime[2][5];                    // [] pierwsze to dane do poszczególnego drona
+  std::string File_name_anime[6];                    // 0 dla korpusu od 1 do 4 dla rotorów oraz 5 dla pliku do rysowania ścieżki lotu
+  File_name_anime[0] = "../datasets/cuboid1.dat";
+  File_name_anime[1] = "../datasets/rotor1.dat";
+  File_name_anime[2] = "../datasets/rotor2.dat";
+  File_name_anime[3] = "../datasets/rotor3.dat";
+  File_name_anime[4] = "../datasets/rotor4.dat";
+  File_name_anime[5] = "../datasets/rozklad_lotu.dat";
 
-  std::string Cuboid_oryginal = "../datasets/cuboid_oryginal.dat";
-  std::string Prism_oryginal = "../datasets/prism_oryginal.dat";
-  
-  add_file_names( *File_name_anime );
+  std::string Cuboid_oryginal;
+  std::string Prism_oryginal;
+  Cuboid_oryginal = "../datasets/cuboid_oryginal.dat";
+  Prism_oryginal = "../datasets/prism_oryginal.dat";
   
   Vector3D polozenie1(4, 4, 0);
   Vector3D polozenie2(30, 20, 0);
 
-  Vector3D skala(1, 1, 1);
-  Drone dron(skala, polozenie1);
+  Vector3D sciezka_lotu[4];
+
+  Drone dron;
+  dron.inicjalizuj_drona(File_name_anime, Cuboid_oryginal, Prism_oryginal, polozenie1);
+
   Scene Scena;
 
-  Scena.drony.push_back(dron);
+  //Scena.drony.push_back(dron);
 
-  dron.get_cuboid().Otworz_Plik_animowany(FILE, File_name_anime[0][0] );
-  if (dron.get_cuboid().Zapis_do_pliku_animowanego(FILE) == false){
-    return 1;
-  }
-  dron.get_cuboid().Zamknij_Plik_animowany(FILE);
 
-  PzG::LaczeDoGNUPlota  Lacze;       // Ta zmienna jest potrzebna do wizualizacji
-                                  // rysunku prostokata
+  PzG::LaczeDoGNUPlota  Lacze;        // Ta zmienna jest potrzebna do wizualizacji
+                                      // rysunku drona
 
 
   Lacze.ZmienTrybRys(PzG::TR_3D);

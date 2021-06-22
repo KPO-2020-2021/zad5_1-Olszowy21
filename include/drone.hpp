@@ -17,7 +17,7 @@ protected:
     
 public:
 
-    void inicjalizuj_drona(std::string name_oryginal_cuboid, std::string name_oryginal_prism  ,Vector3D skala, Vector3D polozenie);
+    void inicjalizuj_drona(std::string anime_files[], std::string name_oryginal_cuboid, std::string name_oryginal_prism , Vector3D polozenie);
 
     Cuboid get_cuboid() const {return *&Korpus;};
     
@@ -32,15 +32,12 @@ public:
     Vector3D Skrobanie_do_rodzica(const Vector3D & top) const;
 
     Vector3D Trans_do_rodzica(const Vector3D & top) const;
+
     bool up_down(double dlugosc_lotu, PzG::LaczeDoGNUPlota &Lacze);
-    bool forward_backward(double dlugosc_lotu, PzG::LaczeDoGNUPlota &Lacze);
-    bool Oblicz_wsp_glb_korpusu() const;
-    bool Oblicz_wsp_glb_rotora() const;
-    bool Oblicz_wsp_glb_drona() const;
+
+    bool forward_backward(double kat_obrotu, double dlugosc_lotu, PzG::LaczeDoGNUPlota &Lacze);
+
+    void Maluj_rozklad_lotu(Vector3D sciezka_lotu[], std::string nazwa_pliku[], double kat_obrotu, double dlugosc_lotu, PzG::LaczeDoGNUPlota &Lacze);
 
     
 };
-
-bool Drone::Oblicz_wsp_glb_korpusu() const{
-
-}

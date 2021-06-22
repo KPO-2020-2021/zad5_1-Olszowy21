@@ -34,7 +34,7 @@ public:
 
     void set_pozycje( Vector3D Pozycja) { Polozenie = Pozycja;};
 
-    std::string set_filename_anime(std::string Filename_anime) { Plik_BrylaAnimowana = Filename_anime;};
+    void set_filename_anime(std::string Filename_anime) { Plik_BrylaAnimowana = Filename_anime;};
 
     const std::string get_filename_anime() const {return Plik_BrylaAnimowana ;};
     

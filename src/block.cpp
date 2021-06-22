@@ -15,6 +15,9 @@ bool Block::Otworz_Plik_animowany(std::ofstream &out) const{
               << ":(  nie powiodla sie." << std::endl;
               return false;
        }
+       else{
+           return true;
+       }
 }
 
 void Block::Zamknij_Plik_animowany(std::ofstream &out) const{

@@ -4,7 +4,7 @@
 
 class Scene{
 
-    Drone Drony[2];
+    std::vector<Drone> Pudlo_z_dronami;
 
     PzG::LaczeDoGNUPlota Lacze;
 

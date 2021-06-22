@@ -25,11 +25,13 @@ public:
 
 // Metody
 
-    void inicjuj_prism(std::string Filename_oryginal, Vector3D Pozycja, Vector3D skala, int index );
+    void inicjuj_prism(std::string Filename_oryginal, Vector3D Pozycja, Vector3D skala);
 
     const Vector<double, SIZE> &operator [] (unsigned int index) const;
 
     Vector<double, SIZE> &operator [] (unsigned int index);
+
+    void Miotaj(const double kat) {kat_do_globalnego += kat;};
 
     // Vector3D Skrobanie_do_ojca(const Vector3D & top) const;
 

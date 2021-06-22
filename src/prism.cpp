@@ -29,8 +29,7 @@ const Vector<double, SIZE>& Prism::operator [] (unsigned int index) const{
     return top[index];
 }
 
-
-void Prism::inicjuj_prism(std::string Filename_oryginal, Vector3D skala, Vector3D Polozenie, int index ){
+void Prism::inicjuj_prism(std::string Filename_oryginal, Vector3D skala, Vector3D Polozenie ){
     
     Vector3D broker;
 
@@ -38,34 +37,32 @@ void Prism::inicjuj_prism(std::string Filename_oryginal, Vector3D skala, Vector3
 
     const char* WSK_FILE = Filename_oryginal.c_str();
 
+    this->Polozenie = Polozenie;
+
     set_skala(skala);
 
     oryginal.open(WSK_FILE, std::ios::in );
 
     if(oryginal.is_open()){
-        while(true){
-            int licznik = 1;                        // zmienna pomagająca poprawnie dodać dane do wiechrzołków
-            for(int j = 0; j < 1; ++j){
-                oryginal >> broker;
-                if (oryginal.eof()) return;
-                broker = skaluj(broker);
-                top[j] = broker;
+        int licznik = 1;                        // zmienna pomagająca poprawnie dodać dane do wiechrzołków
+        
+        for(int j = 0; j < 6; ++j){
+            oryginal >> broker;
+            if (oryginal.eof()) return;
+            broker = skaluj(broker);
+            top[0] = broker;
 
-                for(int i = 0; i < 2; ++i){
-                    oryginal >> broker;
-                    broker = skaluj(broker);
-                    top[licznik] = broker;
-                }
-
+            for(int i = 0; i < 2; ++i){
                 oryginal >> broker;
                 broker = skaluj(broker);
-                top[13] = broker;
-
-                ++licznik;
+                top[licznik] = broker;
             }
 
+            oryginal >> broker;
+            broker = skaluj(broker);
+            top[13] = broker;
+
+            ++licznik;
         }
     }
-
-
 }
