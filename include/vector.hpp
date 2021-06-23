@@ -48,13 +48,17 @@ public:
 
     Vector(T x, T y, T z );
 
-// Metody
+    ~Vector();
+
+// Metodyc
 
     Vector operator + (const Vector &tmp);
 
     Vector operator - (const Vector &tmp);
 
     Vector operator * (const T &tmp);
+
+    Vector operator * (const Vector &tmp) const;
 
     bool operator == (const Vector &tmp) const;
 
@@ -63,6 +67,11 @@ public:
     T &operator [] (unsigned int index);
     
     void Load_vector(); 
+
+    static int zwroc_aktywna_ilosc_wektorow() {return Aktywne_vektory;};
+
+    static int zwroc_ogolna_ilosc_wektorow() {return Ogolnie_vektory;};
+
 };
 
 template <typename T, unsigned int SIZE>
@@ -164,6 +173,12 @@ Vector<T, SIZE>::Vector(T x, T y, T z ){
 }
 
 
+template<typename T, unsigned int SIZE>
+int Vector<T,SIZE>::Aktywne_vektory=0;
+
+template<typename T, unsigned int SIZE>
+int Vector<T,SIZE>::Ogolnie_vektory=0;
+
 /*!
  * Przeciążenie operatora - dla klasy wektor.
  * \param[in] tmp - nazwa wektora zmieniający wartosc klasy.
@@ -205,6 +220,21 @@ Vector<T, SIZE> Vector<T, SIZE>::operator * (const T &tmp){
     Vector<T, SIZE> result;
     for (unsigned int i = 0; i < SIZE; ++i) {
         result[i] = size[i] *= tmp;
+    }
+    return result;
+}
+
+/*!
+ * Przeciążenie operatora * dla klasy wektor.
+ * \param[in] tmp - nazwa wektora zmieniający wartosc klasy.
+ * 
+ * \retval Wynik mnożenia.
+ */
+template <typename T, unsigned int SIZE>
+Vector<T, SIZE> Vector<T, SIZE>::operator * (const Vector &tmp) const{
+    Vector<T, SIZE> result;
+    for (unsigned int i = 0; i < SIZE; ++i) {
+        result[i] = size[i] * tmp[i];
     }
     return result;
 }

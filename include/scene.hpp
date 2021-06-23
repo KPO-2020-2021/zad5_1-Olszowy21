@@ -3,23 +3,24 @@
 #include "drone.hpp"
 
 class Scene{
+protected:
 
     std::vector<Drone> Pudlo_z_dronami;
 
     PzG::LaczeDoGNUPlota Lacze;
 
-    unsigned int Numer_drona;
+    unsigned int Numer_aktywnego_drona;
 
 public:
 
     Scene();
 
-    ~Scene();
+    void Dodaj_drona(Drone droniszcze);
 
-    void Dodaj_drona(Drone dron, Vector3D skala, Vector3D polozenie, std::string Tablica_wzorcowych_plikow, std::string Tablica_animowanych_plikow );
+    void avtive_drone(int index);
 
-    Drone const avtive_drone() const;
+    Drone *use_avtive_drone();
 
-    Drone use_avtive_drone();
+    int index_aktywnego_drona();
 
 };

@@ -17,11 +17,15 @@ protected:
     
 public:
 
-    void inicjalizuj_drona(std::string anime_files[], std::string name_oryginal_cuboid, std::string name_oryginal_prism , Vector3D polozenie);
+    void inicjalizuj_drona(std::string anime_files[], std::string name_oryginal_cuboid, std::string name_oryginal_prism , Vector3D polozenie, PzG::LaczeDoGNUPlota &Lacze);
 
     Cuboid get_cuboid() const {return *&Korpus;};
     
     Prism get_prism(unsigned int index) const {return Rotor[index];};
+
+    double Get_polozeniex() { return Polozenie[0]; };
+
+    double Get_polozeniey() { return Polozenie[1]; };
 
     void zmlucenie_drona_do_animacji();
 
@@ -35,7 +39,7 @@ public:
 
     bool up_down(double dlugosc_lotu, PzG::LaczeDoGNUPlota &Lacze);
 
-    bool forward_backward(double kat_obrotu, double dlugosc_lotu, PzG::LaczeDoGNUPlota &Lacze);
+    void forward_backward(double kat_obrotu, double dlugosc_lotu, PzG::LaczeDoGNUPlota &Lacze);
 
     void Maluj_rozklad_lotu(Vector3D sciezka_lotu[], std::string nazwa_pliku[], double kat_obrotu, double dlugosc_lotu, PzG::LaczeDoGNUPlota &Lacze);
 

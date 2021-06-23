@@ -30,7 +30,8 @@ public:
     Vector3D Skrobanie_do_rodzica(const Vector3D & top) const;
 
     void set_skala(Vector3D &tmp) { skala = tmp; };
-    Vector3D skaluj( const Vector3D top );
+
+    Vector3D skaluj(const Vector3D &top ) const {return skala * top;};
 
     void set_pozycje( Vector3D Pozycja) { Polozenie = Pozycja;};
 

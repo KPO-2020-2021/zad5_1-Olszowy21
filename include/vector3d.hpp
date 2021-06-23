@@ -30,6 +30,9 @@ Vector3D::Vector(double tmp[SIZE]);
 template <> 
 Vector3D::Vector(double x, double y, double z );
 
+template <> 
+Vector3D::~Vector();
+
 template <>
 Vector3D Vector3D::operator - (const Vector &tmp);
 
@@ -38,6 +41,9 @@ Vector3D Vector3D::operator + (const Vector &tmp);
 
 template <>
 Vector3D Vector3D::operator * (const double &tmp);
+
+template <>
+Vector3D Vector3D::operator * (const Vector &tmp) const;
 
 template <>
 bool Vector3D::operator == (const Vector &tmp) const;
