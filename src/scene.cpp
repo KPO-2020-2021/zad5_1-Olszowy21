@@ -2,12 +2,30 @@
 
 Scene::Scene(){
 
-    Numer_drona = 0;
+    Numer_aktywnego_drona = 0;
     
 }
 
-// void Scene::Dodaj_drona(Drone dron, Vector3D skala, Vector3D polozenie, std::string Tablica_wzorcowych_plikow, std::string Tablica_animowanych_plikow ){
-    
-//     Drony[Numer_drona] = dron;
-    
-// }
+void Scene::Dodaj_drona(Drone droniszcze){
+
+    Pudlo_z_dronami.push_back(droniszcze);
+
+}
+
+Drone *Scene::use_avtive_drone(){
+
+    return &Pudlo_z_dronami[Numer_aktywnego_drona];
+
+}
+
+void Scene::avtive_drone(int index){
+
+    Numer_aktywnego_drona = (index - 1);
+
+}
+
+int Scene::index_aktywnego_drona(){
+
+    return Numer_aktywnego_drona;
+
+}

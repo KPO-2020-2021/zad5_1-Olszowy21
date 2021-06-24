@@ -453,6 +453,7 @@ std::string LaczeDoGNUPlota::ZapiszUstawienieRotacjiISkali() const
   _InfoPlikow.clear();
  }
 
+  
 
 
 

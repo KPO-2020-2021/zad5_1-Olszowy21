@@ -6,12 +6,10 @@ bool Block::Otworz_Plik_animowany(std::ofstream &out) const{
 
        std::string File_name = get_filename_anime();
 
-       const char* WSK_FILE = File_name.c_str();
-
-       out.open(WSK_FILE, std::ios::trunc);
+       out.open(File_name, std::ios::trunc);
 
        if (!out.is_open())  {
-              std::cerr << ":(  Operacja otwarcia do zapisu \"" << WSK_FILE << "\"" << std::endl
+              std::cerr << ":(  Operacja otwarcia do zapisu" << std::endl
               << ":(  nie powiodla sie." << std::endl;
               return false;
        }
@@ -31,7 +29,7 @@ Vector3D Block::Skrobanie_do_rodzica(const Vector3D & top) const{
     Vector3D Wynik;
     Matrix3D macierz;
 
-    macierz.obrot_z(kat_do_globalnego);
+    macierz.obrot_x(kat_do_globalnego);
 
     Wynik = macierz * top;
     Wynik = Wynik + Polozenie;

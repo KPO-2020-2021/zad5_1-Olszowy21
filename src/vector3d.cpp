@@ -62,6 +62,8 @@ Vector3D::Vector(){
     for (unsigned int i = 0; i < SIZE; ++i){
         this->size[i] = double();
     }
+    ++Ogolnie_vektory;
+    ++Aktywne_vektory;
 }
 
 /*!
@@ -74,7 +76,9 @@ template <>
 Vector3D::Vector(double tmp[SIZE]){
     for (unsigned int i = 0; i < SIZE; ++i) {
         this->size[i] = tmp[i];
-    }   
+    }
+    ++Ogolnie_vektory;
+    ++Aktywne_vektory;
 }
 
 /*!
@@ -88,6 +92,19 @@ Vector3D::Vector(double x, double y, double z ){
     this->size[0] = x;
     this->size[1] = y;
     this->size[2] = z;
+
+    ++Ogolnie_vektory;
+    ++Aktywne_vektory;
+}
+
+/*!
+ * Destruktor Vectora3D, odejmuje ilość aktywnych wektorów;
+ */
+template <> 
+Vector3D::~Vector(){
+   
+    --Aktywne_vektory;
+
 }
 
 
@@ -132,6 +149,21 @@ Vector3D Vector3D::operator * (const double &tmp){
     Vector3D result;
     for (unsigned int i = 0; i < SIZE; ++i) {
         result[i] = size[i] *= tmp;
+    }
+    return result;
+}
+
+/*!
+ * Przeciążenie operatora * dla klasy wektor.
+ * \param[in] tmp - nazwa wektora zmieniający wartosc klasy.
+ * 
+ * \retval Wynik mnożenia.
+ */
+template <>
+Vector3D Vector3D::operator * (const Vector &tmp) const{
+    Vector3D result;
+    for (unsigned int i = 0; i < SIZE; ++i) {
+        result[i] = size[i] * tmp[i];
     }
     return result;
 }
@@ -196,4 +228,6 @@ void Vector3D::Load_vector(){
     this->size[0] = x;
     this->size[1] = y;
     this->size[2] = z;
-}   
+}
+
+

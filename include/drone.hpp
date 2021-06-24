@@ -37,7 +37,7 @@ public:
 
     Vector3D Trans_do_rodzica(const Vector3D & top) const;
 
-    bool up_down(double dlugosc_lotu, PzG::LaczeDoGNUPlota &Lacze);
+    bool up_down(double wysokosc_lotu, PzG::LaczeDoGNUPlota &Lacze);
 
     void forward_backward(double kat_obrotu, double dlugosc_lotu, PzG::LaczeDoGNUPlota &Lacze);
 

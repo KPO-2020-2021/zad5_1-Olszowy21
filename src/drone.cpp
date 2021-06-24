@@ -2,7 +2,7 @@
 
 
 
-void Drone::inicjalizuj_drona(std::string anime_files[], std::string name_oryginal_cuboid, std::string name_oryginal_prism, Vector3D polozenie){
+void Drone::inicjalizuj_drona(std::string anime_files[], std::string name_oryginal_cuboid, std::string name_oryginal_prism, Vector3D polozenie, PzG::LaczeDoGNUPlota &Lacze){
     
     this->Korpus.set_filename_anime(anime_files[0]);
     this->Rotor[0].set_filename_anime(anime_files[1]);
@@ -12,31 +12,44 @@ void Drone::inicjalizuj_drona(std::string anime_files[], std::string name_orygin
     
     this->Polozenie = polozenie;
 
-    Vector3D Pozycja_rotora0(-3, -6, 2.5);
-    Vector3D Pozycja_rotora1(3, -6, 2.5);
-    Vector3D Pozycja_rotora2(3, 6, 2.5);
-    Vector3D Pozycja_rotora3(-3, 6, 2.5);
+    Vector3D Pozycja_korpusu(0, 0, 0);
+
+    Vector3D Pozycja_rotora0(-2, -4, 2.5);
+    Vector3D Pozycja_rotora1(2, -4, 2.5);
+    Vector3D Pozycja_rotora2(2, 4, 2.5);
+    Vector3D Pozycja_rotora3(-2, 4, 2.5);
 
     Vector3D skala_cuboida(6, 12, 4);
     Vector3D skala_prisma(4, 4, 1);
 
-    Korpus.inicjuj_cuboida(name_oryginal_cuboid, skala_cuboida, polozenie);
+
+    Korpus.inicjuj_cuboida(name_oryginal_cuboid, skala_cuboida, Pozycja_korpusu);
 
     Rotor[0].inicjuj_prism(name_oryginal_prism, skala_prisma, Pozycja_rotora0);
     Rotor[1].inicjuj_prism(name_oryginal_prism, skala_prisma, Pozycja_rotora1);
     Rotor[2].inicjuj_prism(name_oryginal_prism, skala_prisma, Pozycja_rotora2);
     Rotor[3].inicjuj_prism(name_oryginal_prism, skala_prisma, Pozycja_rotora3);
 
+
+    Lacze.DodajNazwePliku(anime_files[0].c_str());
+    Lacze.DodajNazwePliku(anime_files[1].c_str());
+    Lacze.DodajNazwePliku(anime_files[2].c_str());
+    Lacze.DodajNazwePliku(anime_files[3].c_str());
+    Lacze.DodajNazwePliku(anime_files[4].c_str());
+    Lacze.DodajNazwePliku(anime_files[5].c_str());
+
+    zmlucenie_drona_do_animacji();
+
 }
 
-bool Drone::up_down(double dlugosc_lotu, PzG::LaczeDoGNUPlota &Lacze){
+bool Drone::up_down(double wysokosc_lotu, PzG::LaczeDoGNUPlota &Lacze){
     
     zmlucenie_drona_do_animacji();
-    Lacze.Rysuj();
+
     int stan_bool = 0;
     Vector3D step_brother(0, 0, -2);
 
-    if(dlugosc_lotu > 0){
+    if(abs(wysokosc_lotu) > 0){
         step_brother = step_brother + Polozenie;
         double droga = step_brother[2];
 
@@ -48,7 +61,7 @@ bool Drone::up_down(double dlugosc_lotu, PzG::LaczeDoGNUPlota &Lacze){
                 Polozenie = Polozenie + dokladka;
                 zmlucenie_drona_do_animacji();
                 Lacze.Rysuj();
-                stan_bool = 1;
+                stan_bool = 0;
             }
             else{
                 Polozenie = Polozenie + step_brother;
@@ -57,19 +70,19 @@ bool Drone::up_down(double dlugosc_lotu, PzG::LaczeDoGNUPlota &Lacze){
             zmlucenie_drona_do_animacji();
             Lacze.Rysuj();
         }
-        return stan_bool;
     
     }
     else{
-        return stan_bool;
+        stan_bool = 1;
     }
+    return stan_bool;
     
 }
 
-bool Drone::forward_backward(double kat_obrotu, double dlugosc_lotu, PzG::LaczeDoGNUPlota &Lacze){
+void Drone::forward_backward(double kat_obrotu, double dlugosc_lotu, PzG::LaczeDoGNUPlota &Lacze){
 
 
-    for(int i = 0; i < kat_obrotu; i+=2){
+    for(int i = 0; i < kat_obrotu; i+=5){
         
         Rotor[0].Miotaj(2);
         Rotor[1].Miotaj(-2);
@@ -112,13 +125,15 @@ void Drone::Maluj_rozklad_lotu(Vector3D sciezka_lotu[], std::string nazwa_pliku[
     
     std::ofstream File_lot;
     File_lot.open(nazwa_pliku[5].c_str() , std::ios::trunc );
+    Lacze.DodajNazwePliku(nazwa_pliku[5].c_str());
 
     if(File_lot.is_open()){
         for(int i =0; i < 4; ++i){
-            File_lot << sciezka_lotu[i];
-            Lacze.DodajNazwePliku(nazwa_pliku[5].c_str());
+            File_lot << sciezka_lotu[i] << std::endl;
+            usleep(100000);
             Lacze.Rysuj();
         }
+        File_lot.close();
     }
     else{
         throw std::runtime_error("Plik nie istnieje / błąd pliku");
@@ -158,6 +173,7 @@ void Drone::ze_wzora_rotora_do_animatora( const Prism &rotorek ){
     Vector3D broker;
 
     std::ofstream anime;
+    int Licznik = 1;
 
     if(rotorek.Otworz_Plik_animowany(anime)){
         for(int i = 0; i < 6; ++i){
@@ -167,11 +183,12 @@ void Drone::ze_wzora_rotora_do_animatora( const Prism &rotorek ){
             anime << broker;
             anime << std::endl;
             for(int j = 1; j < 3; ++j){
-                broker = rotorek[j + i*2];
+                broker = rotorek[Licznik];
                 broker = rotorek.Skrobanie_do_rodzica(broker);
                 broker = Skrobanie_do_rodzica(broker);
                 anime << broker;
                 anime << std::endl;
+                ++Licznik;
             }
             broker = rotorek[13];
             broker = rotorek.Skrobanie_do_rodzica(broker);
@@ -206,7 +223,7 @@ void Drone::ze_wzora_rotora_do_animatora( const Prism &rotorek ){
 
     }
     else{
-        throw std::runtime_error("Plik nie istnieje / błąd pliku");
+        throw std::runtime_error("Plik nie istnieje / błąd pliku2");
     }
 }
 
@@ -217,8 +234,10 @@ void Drone::ze_wzora_cuboida_do_animatora(){
     Vector3D broker;
 
     std::ofstream anime;
-
+    int Licznik = 1;
+    
     if(Korpus.Otworz_Plik_animowany(anime)){
+        
         for(int i = 0; i < 4; ++i){
             broker = Korpus[0];
             broker = Korpus.Skrobanie_do_rodzica(broker);
@@ -226,11 +245,12 @@ void Drone::ze_wzora_cuboida_do_animatora(){
             anime << broker;
             anime << std::endl;
             for(int j = 1; j < 3; ++j){
-                broker = Korpus[j + i*2];
+                broker = Korpus[Licznik];
                 broker = Korpus.Skrobanie_do_rodzica(broker);
                 broker = Skrobanie_do_rodzica(broker);
                 anime << broker;
                 anime << std::endl;
+                ++Licznik;
             }
             broker = Korpus[9];
             broker = Korpus.Skrobanie_do_rodzica(broker);
@@ -265,6 +285,6 @@ void Drone::ze_wzora_cuboida_do_animatora(){
 
     }
     else{
-        throw std::runtime_error("PLik nie istnieje / błąd pliku");
+        throw std::runtime_error("PLik nie istnieje / błąd pliku1");
     }
 }

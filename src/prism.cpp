@@ -56,13 +56,14 @@ void Prism::inicjuj_prism(std::string Filename_oryginal, Vector3D skala, Vector3
                 oryginal >> broker;
                 broker = skaluj(broker);
                 top[licznik] = broker;
+                ++licznik;
             }
 
             oryginal >> broker;
             broker = skaluj(broker);
             top[13] = broker;
 
-            ++licznik;
         }
     }
+    oryginal.close();
 }

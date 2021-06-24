@@ -48,13 +48,11 @@ void Cuboid::inicjuj_cuboida(std::string Filename_oryginal , Vector3D skala, Vec
 
     std::ifstream oryginal;
 
-    const char* WSK_FILE = Filename_oryginal.c_str();
-
     this->Polozenie = Polozenie;
 
     set_skala(skala);
 
-    oryginal.open(WSK_FILE, std::ios::in );
+    oryginal.open(Filename_oryginal, std::ios::in );
 
     if(oryginal.is_open()){
         int licznik = 1;                        // zmienna pomagająca poprawnie dodać dane do wiechrzołków
@@ -68,13 +66,12 @@ void Cuboid::inicjuj_cuboida(std::string Filename_oryginal , Vector3D skala, Vec
                 oryginal >> broker;
                 broker = skaluj(broker);
                 top[licznik] = broker;
+                ++licznik;
             }
 
             oryginal >> broker;
             broker = skaluj(broker);
             top[9] = broker;
-
-            ++licznik;
         }
     }
 
