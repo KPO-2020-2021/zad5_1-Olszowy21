@@ -29,7 +29,7 @@ Vector3D Block::Skrobanie_do_rodzica(const Vector3D & top) const{
     Vector3D Wynik;
     Matrix3D macierz;
 
-    macierz.obrot_x(kat_do_globalnego);
+    macierz.obrot_z(kat_do_globalnego);
 
     Wynik = macierz * top;
     Wynik = Wynik + Polozenie;

@@ -189,7 +189,7 @@ template<typename T, unsigned int SIZE>
 Vector<T, SIZE> Vector<T, SIZE>::operator - (const Vector &tmp){
     Vector<T, SIZE> result;
     for (unsigned int i = 0; i < SIZE; ++i) {
-        result[i] = size[i] -= tmp[i];
+        result[i] = size[i] - tmp[i];
     }
     return result;
 }
@@ -204,7 +204,7 @@ template<typename T, unsigned int SIZE>
 Vector<T, SIZE> Vector<T, SIZE>::operator + (const Vector &tmp){
     Vector result;
     for (unsigned int i = 0; i < SIZE; ++i) {
-        result[i] = size[i] += tmp[i];
+        result[i] = size[i] + tmp[i];
     }
     return result;
 }
@@ -219,7 +219,7 @@ template <typename T, unsigned int SIZE>
 Vector<T, SIZE> Vector<T, SIZE>::operator * (const T &tmp){
     Vector<T, SIZE> result;
     for (unsigned int i = 0; i < SIZE; ++i) {
-        result[i] = size[i] *= tmp;
+        result[i] = size[i] * tmp;
     }
     return result;
 }

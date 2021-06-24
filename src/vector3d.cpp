@@ -118,7 +118,7 @@ template <>
 Vector3D Vector3D::operator - (const Vector &tmp){
     Vector3D result;
     for (unsigned int i = 0; i < SIZE; ++i) {
-        result[i] = size[i] -= tmp[i];
+        result[i] = size[i] - tmp[i];
     }
     return result;
 }
@@ -133,7 +133,7 @@ template <>
 Vector3D Vector3D::operator + (const Vector &tmp){
     Vector3D result;
     for (unsigned int i = 0; i < SIZE; ++i) {
-        result[i] = size[i] += tmp[i];
+        result[i] = size[i] + tmp[i];
     }
     return result;
 }

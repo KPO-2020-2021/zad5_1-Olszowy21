@@ -108,7 +108,7 @@ void Matrix3D::set_degree_axis(){
  * 
  */
 template <>
-void Matrix3D::obrot_x(double kat){
+void Matrix3D::obrot_z(double kat){
     double rad = kat * M_PI / 180;
     
     if(SIZE == 3){
@@ -161,7 +161,7 @@ void Matrix3D::obrot_y(double kat){
  * 
  */
 template <>
-void Matrix3D::obrot_z(double kat){
+void Matrix3D::obrot_x(double kat){
     double rad = kat * M_PI / 180;
     
     if(SIZE == 3){

@@ -36,7 +36,6 @@ void Drone::inicjalizuj_drona(std::string anime_files[], std::string name_orygin
     Lacze.DodajNazwePliku(anime_files[2].c_str());
     Lacze.DodajNazwePliku(anime_files[3].c_str());
     Lacze.DodajNazwePliku(anime_files[4].c_str());
-    Lacze.DodajNazwePliku(anime_files[5].c_str());
 
     zmlucenie_drona_do_animacji();
 
@@ -47,33 +46,45 @@ bool Drone::up_down(double wysokosc_lotu, PzG::LaczeDoGNUPlota &Lacze){
     zmlucenie_drona_do_animacji();
 
     int stan_bool = 0;
-    Vector3D step_brother(0, 0, -2);
+    double step;
+    wysokosc_lotu > 0 ? step = 2 : step = -2;
+    Vector3D step_brother(0, 0, step);
 
     if(abs(wysokosc_lotu) > 0){
-        step_brother = step_brother + Polozenie;
-        double droga = step_brother[2];
+
+        double droga = abs(wysokosc_lotu);
 
         for(int i = 0; i < droga; i+=2){
             
-            if( ((i <= droga) <= MIN_DIFF ) && ((( i+2 ) >= droga) <= MIN_DIFF) ){
+            if( (i <= droga ) && (( i+2 ) >= droga) ){
                 droga = droga - i;
                 Vector3D dokladka(0, 0, droga);
                 Polozenie = Polozenie + dokladka;
+
+                Rotor[0].Miotaj(20);
+                Rotor[1].Miotaj(-20);
+                Rotor[2].Miotaj(20);
+                Rotor[3].Miotaj(-20);
+
                 zmlucenie_drona_do_animacji();
+                usleep(100000);
+
                 Lacze.Rysuj();
-                stan_bool = 0;
+
+                i = 0;
             }
             else{
                 Polozenie = Polozenie + step_brother;
             }
-            usleep(100000);
             zmlucenie_drona_do_animacji();
+            usleep(100000);
             Lacze.Rysuj();
         }
+        stan_bool = 1;
     
     }
     else{
-        stan_bool = 1;
+        stan_bool = 0;
     }
     return stan_bool;
     
@@ -81,43 +92,85 @@ bool Drone::up_down(double wysokosc_lotu, PzG::LaczeDoGNUPlota &Lacze){
 
 void Drone::forward_backward(double kat_obrotu, double dlugosc_lotu, PzG::LaczeDoGNUPlota &Lacze){
 
+    double step;
+    kat_obrotu > 0 ? step = 5 : step = -5;
+    double droga = abs(kat_obrotu);
 
-    for(int i = 0; i < kat_obrotu; i+=5){
+    for(int i = 0; i < droga ; i+=5){
+
+        if( (i <= droga) && (( i+5 ) >= droga) ){
+            droga = droga - i;
         
-        Rotor[0].Miotaj(2);
-        Rotor[1].Miotaj(-2);
-        Rotor[2].Miotaj(2);
-        Rotor[3].Miotaj(-2);
-        kat_do_globalnego += 5;
+            Rotor[0].Miotaj(10);
+            Rotor[1].Miotaj(-10);
+            Rotor[2].Miotaj(10);
+            Rotor[3].Miotaj(-10);
 
-        usleep(100000);
-        zmlucenie_drona_do_animacji();
-        Lacze.Rysuj();
+            kat_obrotu > 0 ? kat_do_globalnego += droga : kat_do_globalnego -= droga;
+            
+            zmlucenie_drona_do_animacji();
+            usleep(100000);
+            Lacze.Rysuj();
+
+            i = droga;
+        }
+        else{
+
+            kat_do_globalnego += step;
+
+            zmlucenie_drona_do_animacji();
+            usleep(100000);
+            Lacze.Rysuj();
+        }
     }
 
-    Vector3D step_sister(0, 0, 5);
+    double kaciwo = kat_do_globalnego * M_PI / 180;
+    Vector3D kierunek(cos(kaciwo) * 2, sin(kaciwo) * 2, 0);
 
-    for(int i = 0; i < dlugosc_lotu; i+=2){
-    
-        Rotor[0].Miotaj(2);
-        Rotor[1].Miotaj(-2);
-        Rotor[2].Miotaj(2);
-        Rotor[3].Miotaj(-2);
+    for(int j = 0; j < droga; j+=2){
 
-        Polozenie = Polozenie + step_sister;
+        if( (j <= dlugosc_lotu) && (( j+2 ) >= dlugosc_lotu) ){
 
-        usleep(100000);
-        zmlucenie_drona_do_animacji();
-        Lacze.Rysuj();
-  }
+            droga = droga - j;
+            
+            Vector3D dokladka(cos(kaciwo) * droga, sin(kaciwo) * droga, 0);
+
+            Rotor[0].Miotaj(10);
+            Rotor[1].Miotaj(-10);
+            Rotor[2].Miotaj(10);
+            Rotor[3].Miotaj(-10);
+
+            Polozenie = Polozenie + dokladka;
+
+            zmlucenie_drona_do_animacji();
+            usleep(100000);
+            Lacze.Rysuj();
+
+            j = droga;
+
+        }
+        else{
+            Polozenie = Polozenie + kierunek;
+
+            zmlucenie_drona_do_animacji();
+            usleep(100000);
+            Lacze.Rysuj();
+        }
+    }
 }
 
 void Drone::Maluj_rozklad_lotu(Vector3D sciezka_lotu[], std::string nazwa_pliku[], double kat_obrotu, double dlugosc_lotu, PzG::LaczeDoGNUPlota &Lacze){
     
     double kaciwo = (kat_obrotu + kat_do_globalnego) * M_PI / 180;
-    Vector3D wysokosc(0, 0, 100);
-    Vector3D kierunek(cos(kaciwo)*dlugosc_lotu, sin(kaciwo)*dlugosc_lotu, 0);
-    
+    Vector3D wysokosc(0, 0, 50);
+    Vector3D kierunek(cos(kaciwo) * dlugosc_lotu, sin(kaciwo) * dlugosc_lotu, 0);
+
+    for(int i =0; i < 4; ++i){
+
+        sciezka_lotu[i] = Vector3D(0, 0, 0);
+
+    }
+
     sciezka_lotu[0] = Polozenie;
     sciezka_lotu[1] = Polozenie + wysokosc;
     sciezka_lotu[2] = Polozenie + wysokosc + kierunek;
