@@ -57,8 +57,8 @@ int main() {
   Cuboid_oryginal = "../datasets/cuboid_oryginal.dat";
   Prism_oryginal = "../datasets/prism_oryginal.dat";
   
-  Vector3D polozenie1(20, 0, 0);
-  Vector3D polozenie2(0, 2, 0);
+  Vector3D polozenie1(20, 20, 0);
+  Vector3D polozenie2(5, 5, 0);
 
   Vector3D sciezka_lotu[4];
 
@@ -80,9 +80,9 @@ int main() {
 
   Lacze.Inicjalizuj();
 
-  Lacze.UstawZakresX(-60, 60);
-  Lacze.UstawZakresY(-60, 60);
-  Lacze.UstawZakresZ(0, 60);
+  Lacze.UstawZakresX(-100, 100);
+  Lacze.UstawZakresY(-100, 100);
+  Lacze.UstawZakresZ(0, 100);
 
   Lacze.Rysuj();
 
@@ -119,7 +119,7 @@ int main() {
             break;
       case 'a':
 
-            std::cout<<"\tJaki dron wariacie"<<std::endl;
+            std::cout<<"\tWybór aktywnego drona "<<std::endl;
 
             std::cout<<"\t1 - Polozenie (x,y): " << dron1.Get_polozeniex() << " " << dron1.Get_polozeniey();
             if( Scena.index_aktywnego_drona() == 0){
