@@ -25,6 +25,9 @@ template <>
 Vector3D::Vector();
 
 template <>
+Vector3D::Vector(const Vector &second);
+
+template <>
 Vector3D::Vector(double tmp[SIZE]);
 
 template <> 

@@ -16,12 +16,6 @@ Cuboid::Cuboid(){
 
 }
 
-Cuboid::Cuboid(Vector3D centrum){
-    
-    Polozenie = centrum;
-
-}
-
 /*!
  * Przeciazenie operatora [] dla danych chronionych prostokata.
  * \param[in] index - pomocniczy unsigned int ktory zwroci odpowiedni dla
@@ -42,7 +36,7 @@ const Vector<double, SIZE>& Cuboid::operator [] (unsigned int index) const{
     return top[index];
 }
 
-void Cuboid::inicjuj_cuboida(std::string Filename_oryginal , Vector3D skala, Vector3D Polozenie ){
+void Cuboid::inicjuj_cuboida(std::string Filename_oryginal , Vector3D &skala, Vector3D &Polozenie ){
     
     Vector3D broker;
 

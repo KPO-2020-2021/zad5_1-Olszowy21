@@ -25,7 +25,7 @@ public:
 
 // Metody
 
-    void inicjuj_prism(std::string Filename_oryginal, Vector3D Pozycja, Vector3D skala);
+    void inicjuj_prism(std::string Filename_oryginal, Vector3D &Pozycja, Vector3D &skala);
 
     const Vector<double, SIZE> &operator [] (unsigned int index) const;
 

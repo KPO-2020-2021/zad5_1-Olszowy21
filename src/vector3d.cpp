@@ -59,12 +59,26 @@ std::istream &operator >> (std::istream &in, Vector3D &tmp) {
  */
 template <>
 Vector3D::Vector(){
+
     for (unsigned int i = 0; i < SIZE; ++i){
         this->size[i] = double();
     }
     ++Ogolnie_vektory;
     ++Aktywne_vektory;
 }
+
+template <>
+Vector3D::Vector(const Vector3D &second){
+
+    for (unsigned int i = 0; i < SIZE; ++i){
+        this->size[i] = second[i];
+    }
+
+    ++Ogolnie_vektory;
+    ++Aktywne_vektory;
+
+}
+
 
 /*!
  * Konstruktor macierzy.

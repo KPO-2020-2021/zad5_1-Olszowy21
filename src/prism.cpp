@@ -29,19 +29,17 @@ const Vector<double, SIZE>& Prism::operator [] (unsigned int index) const{
     return top[index];
 }
 
-void Prism::inicjuj_prism(std::string Filename_oryginal, Vector3D skala, Vector3D Polozenie ){
+void Prism::inicjuj_prism(std::string Filename_oryginal, Vector3D &skala, Vector3D &Polozenie ){
     
     Vector3D broker;
 
     std::ifstream oryginal;
 
-    const char* WSK_FILE = Filename_oryginal.c_str();
-
     this->Polozenie = Polozenie;
 
     set_skala(skala);
 
-    oryginal.open(WSK_FILE, std::ios::in );
+    oryginal.open(Filename_oryginal, std::ios::in );
 
     if(oryginal.is_open()){
         int licznik = 1;                        // zmienna pomagająca poprawnie dodać dane do wiechrzołków

@@ -57,8 +57,8 @@ int main() {
   Cuboid_oryginal = "../datasets/cuboid_oryginal.dat";
   Prism_oryginal = "../datasets/prism_oryginal.dat";
   
-  Vector3D polozenie1(4, 4, 2);
-  Vector3D polozenie2(30, 20, 2);
+  Vector3D polozenie1(20, 0, 0);
+  Vector3D polozenie2(0, 2, 0);
 
   Vector3D sciezka_lotu[4];
 
@@ -66,8 +66,8 @@ int main() {
                                       // rysunku drona
 
   Drone dron1, dron2;
-  dron1.inicjalizuj_drona(File_name_anime, Cuboid_oryginal, Prism_oryginal, polozenie1, Lacze);
-  dron2.inicjalizuj_drona(File_name_anime1, Cuboid_oryginal, Prism_oryginal, polozenie2, Lacze);
+  dron1.inicjalizuj_drona(File_name_anime, Cuboid_oryginal, Prism_oryginal, polozenie1, 0 , Lacze);
+  dron2.inicjalizuj_drona(File_name_anime1, Cuboid_oryginal, Prism_oryginal, polozenie2, 45 , Lacze);
 
   Scene Scena;
   Scena.Dodaj_drona(dron1);
@@ -80,9 +80,9 @@ int main() {
 
   Lacze.Inicjalizuj();
 
-  Lacze.UstawZakresX(-100, 100);
-  Lacze.UstawZakresY(-100, 100);
-  Lacze.UstawZakresZ(0, 70);
+  Lacze.UstawZakresX(-60, 60);
+  Lacze.UstawZakresY(-60, 60);
+  Lacze.UstawZakresZ(0, 60);
 
   Lacze.Rysuj();
 

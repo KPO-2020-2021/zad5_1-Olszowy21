@@ -17,7 +17,7 @@ protected:
     
 public:
 
-    void inicjalizuj_drona(std::string anime_files[], std::string name_oryginal_cuboid, std::string name_oryginal_prism , Vector3D polozenie, PzG::LaczeDoGNUPlota &Lacze);
+    void inicjalizuj_drona(std::string anime_files[], std::string name_oryginal_cuboid, std::string name_oryginal_prism , Vector3D &polozenie, double kat, PzG::LaczeDoGNUPlota &Lacze);
 
     Cuboid get_cuboid() const {return *&Korpus;};
     

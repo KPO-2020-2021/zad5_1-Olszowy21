@@ -33,7 +33,7 @@ public:
 
     Vector3D skaluj(const Vector3D &top ) const {return skala * top;};
 
-    void set_pozycje( Vector3D Pozycja) { Polozenie = Pozycja;};
+    void set_pozycje( Vector3D &Pozycja) { Polozenie = Pozycja;};
 
     void set_filename_anime(std::string Filename_anime) { Plik_BrylaAnimowana = Filename_anime;};
 

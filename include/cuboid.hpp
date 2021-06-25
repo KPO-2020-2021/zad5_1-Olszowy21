@@ -25,15 +25,13 @@ public:
 // Konstruktory 
 
     Cuboid();
-
-    Cuboid(Vector3D centrum);
     
     
 // Metody
 
     void length_of_the_sides(int index);
 
-    void inicjuj_cuboida(std::string Filename_oryginal, Vector3D skala, Vector3D Polozenie );
+    void inicjuj_cuboida(std::string Filename_oryginal, Vector3D &skala, Vector3D &Polozenie );
 
     const Vector<double, SIZE> &operator [] (unsigned int index) const;
 

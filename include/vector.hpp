@@ -44,6 +44,8 @@ public:
 
     Vector();
 
+    Vector(const Vector<T, SIZE> &second);
+
     Vector(T tmp[SIZE]);
 
     Vector(T x, T y, T z );
@@ -61,6 +63,8 @@ public:
     Vector operator * (const Vector &tmp) const;
 
     bool operator == (const Vector &tmp) const;
+
+    Vector operator = (const Vector &v);
 
     const T &operator [] (unsigned int index) const;
 
@@ -146,6 +150,7 @@ Vector<T, SIZE>::Vector(){
     }
 }
 
+
 /*!
  * Konstruktor macierzy.
  * \param[in] tmp - nazwa wektora do wpisania jego wartości do klasy.
@@ -174,10 +179,10 @@ Vector<T, SIZE>::Vector(T x, T y, T z ){
 
 
 template<typename T, unsigned int SIZE>
-int Vector<T,SIZE>::Aktywne_vektory=0;
+int Vector<T,SIZE>::Aktywne_vektory = 0;
 
 template<typename T, unsigned int SIZE>
-int Vector<T,SIZE>::Ogolnie_vektory=0;
+int Vector<T,SIZE>::Ogolnie_vektory = 0;
 
 /*!
  * Przeciążenie operatora - dla klasy wektor.
@@ -193,6 +198,8 @@ Vector<T, SIZE> Vector<T, SIZE>::operator - (const Vector &tmp){
     }
     return result;
 }
+
+
 
 /*!
  * Przeciążenie operatora + dla klasy wektor.
@@ -252,6 +259,14 @@ bool Vector<T, SIZE>::operator == (const Vector &tmp) const{
         return true;
     }
     return false;
+}
+
+template<typename T, unsigned int SIZE>
+Vector<T, SIZE> Vector<T, SIZE>::operator = (const Vector<T, SIZE> &v){
+    for(unsigned int i = 0; i < SIZE; ++i){
+        size[i] = v[i];
+    }
+    return *this;
 }
 
 /*!
