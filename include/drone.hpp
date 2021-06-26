@@ -27,6 +27,8 @@ public:
 
     double Get_polozeniey() { return Polozenie[1]; };
 
+    double Get_kat_do_globalnego()  { return kat_do_globalnego; };
+
     void zmlucenie_drona_do_animacji();
 
     void ze_wzora_rotora_do_animatora( const Prism &rotorek );
@@ -43,5 +45,5 @@ public:
 
     void Maluj_rozklad_lotu(Vector3D sciezka_lotu[], std::string nazwa_pliku[], double kat_obrotu, double dlugosc_lotu, PzG::LaczeDoGNUPlota &Lacze);
 
-    
+    bool Zwiad(Vector3D sciezka_lotu_po_okregu[], std::string nazwa_pliku[], double radius, PzG::LaczeDoGNUPlota  &Lacze);
 };
