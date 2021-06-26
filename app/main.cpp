@@ -90,6 +90,7 @@ int main() {
   std::cout<<"\n\t**********************MENU***********************"<<std::endl;
   std::cout<<"\ta - Wybierz aktywnego drona"<<std::endl;
   std::cout<<"\tp - zadaj parametry przelotu"<<std::endl;
+  std::cout<<"\to - przelot zwiadowy"<<std::endl;
   std::cout<<"\tm - wyswietl menu"<<std::endl<<std::endl;
 
   std::cout<<"\tk - koniec dzialania programu"<<std::endl;
